@@ -22,7 +22,7 @@ export default function RootLayout({ children }) {
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <div className="flex h-screen overflow-hidden">
           {/* Fixed Left Sidebar */}
-          <div className="w-1/3 h-screen fixed top-0 left-0 bg-[#FDD9A0] overflow-y-auto">
+          <div className="w-1/3 h-screen fixed top-0 left-0 overflow-y-auto">
             <AdminSidebar />
           </div>
 

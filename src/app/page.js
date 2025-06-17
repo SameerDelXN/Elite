@@ -1,4 +1,6 @@
 import HeroSection from '@/app/components/herosection';
+import ServicesSection from '@/app/components/category';
+import FeedbackSection from '@/app/components/feedback';
 
 export default function Home() {
   return (
@@ -6,6 +8,9 @@ export default function Home() {
       <HeroSection />
       {/* <HeroSection /> */}
       {/* Other sections */}
+      <ServicesSection/>
+      <FeedbackSection/>
+
     </main>
   );
 }
