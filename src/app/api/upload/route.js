@@ -3,50 +3,38 @@ import { v2 as cloudinary } from 'cloudinary';
 
 // Configure Cloudinary
 cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME || 'dislw5d0o',
-  api_key: process.env.CLOUDINARY_API_KEY || '262842887729268',
-  api_secret: process.env.CLOUDINARY_API_SECRET || 'ZhpLHOV0n8lSIhmPdipRKUfuuc0',
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
 export async function POST(request) {
+  const formData = await request.formData();
+  const file = formData.get('file');
+
+  if (!file) {
+    return NextResponse.json({ error: 'No file uploaded' }, { status: 400 });
+  }
+
+  const bytes = await file.arrayBuffer();
+  const buffer = Buffer.from(bytes);
+
   try {
-    const formData = await request.formData();
-    const file = formData.get('file');
-
-    if (!file) {
-      return NextResponse.json(
-        { error: 'No file provided' },
-        { status: 400 }
-      );
-    }
-
-    // Convert file to buffer
-    const bytes = await file.arrayBuffer();
-    const buffer = Buffer.from(bytes);
-
-    // Upload to Cloudinary
-    const result = await new Promise((resolve, reject) => {
+    const uploadResult = await new Promise((resolve, reject) => {
       cloudinary.uploader.upload_stream(
-        {
-          folder: 'elite-admin',
-          resource_type: 'auto',
-        },
+        { resource_type: 'auto' },
         (error, result) => {
-          if (error) reject(error);
-          else resolve(result);
+          if (error) {
+            reject(error);
+          } else {
+            resolve(result);
+          }
         }
       ).end(buffer);
     });
 
-    return NextResponse.json({
-      url: result.secure_url,
-      public_id: result.public_id,
-    });
+    return NextResponse.json({ url: uploadResult.secure_url });
   } catch (error) {
-    console.error('Upload error:', error);
-    return NextResponse.json(
-      { error: 'Error uploading file' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: 'Failed to upload image' }, { status: 500 });
   }
 } 

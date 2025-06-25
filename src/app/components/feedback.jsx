@@ -53,7 +53,8 @@ const FeedbackSection = () => {
 
       if (response.ok) {
         const newFeedback = await response.json();
-        setFeedbacks([newFeedback, ...feedbacks]);
+        console.log("adsf",newFeedback);
+        // setFeedbacks([newFeedback, ...feedbacks]);
         setFormData({
           name: '',
           email: '',

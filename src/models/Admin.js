@@ -21,20 +21,8 @@ const adminSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-  updatedAt: {
-    type: Date,
-    default: Date.now,
-  },
-});
-
-// Update the updatedAt field before saving
-adminSchema.pre('save', function(next) {
-  this.updatedAt = new Date();
-  next();
+}, {
+  timestamps: true,
 });
 
 const Admin = mongoose.models.Admin || mongoose.model('Admin', adminSchema);
