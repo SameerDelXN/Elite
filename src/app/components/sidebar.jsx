@@ -6,7 +6,7 @@ import Image from 'next/image';
 const DEFAULT_ADMIN = {
   name: 'Admin User',
   title: 'Administrator',
-  imageUrl: '/default-profile.jpg',
+  imageUrl: '',
   details: 'System administration, User management, Security',
   description: 'Experienced administrator focused on system security and operational efficiency.',
 };
@@ -95,14 +95,14 @@ export default function AdminSidebar() {
           <div className="relative inline-block">
             <div className="relative w-32 h-32 lg:w-36 lg:h-36 mx-auto rounded-full overflow-hidden bg-slate-800 shadow-lg border-4 border-slate-700 mb-4 group-hover:shadow-xl transition-all duration-300">
               <Image
-                src={adminData?.imageUrl || '/default-profile.jpg'}
+                src={adminData?.imageUrl}
                 alt={adminData?.name || 'Admin'}
                 fill
                 className="object-cover group-hover:scale-105 transition-transform duration-300"
                 priority
-                onError={(e) => {
-                  e.target.src = '/default-profile.jpg';
-                }}
+                // onError={(e) => {
+                //   e.target.src = '/default-profile.jpg';
+                // }}
               />
             </div>
             {/* Status indicator */}
