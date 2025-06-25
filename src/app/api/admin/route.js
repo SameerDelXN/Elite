@@ -1,16 +1,22 @@
 import { NextResponse } from 'next/server';
-import connectDB from '@/lib/db';
-import Admin from '@/models/Admin';
+
+// Temporary in-memory storage for testing
+let adminData = {
+  name: 'Admin User',
+  title: 'Administrator',
+  imageUrl: '',
+  details: 'Admin details',
+  description: 'Admin description'
+};
 
 export async function GET() {
   try {
-    await connectDB();
-    const admin = await Admin.findOne();
-    return NextResponse.json(admin || {});
+    console.log('GET admin data from memory');
+    return NextResponse.json(adminData);
   } catch (error) {
     console.error('Error fetching admin:', error);
     return NextResponse.json(
-      { error: 'Failed to fetch admin data' },
+      { error: 'Failed to fetch admin data', details: error.message },
       { status: 500 }
     );
   }
@@ -18,23 +24,37 @@ export async function GET() {
 
 export async function PUT(request) {
   try {
-    await connectDB();
+    console.log('PUT admin data to memory');
     const data = await request.json();
+    console.log('Received update data:', data);
 
-    // Find the admin document or create a new one
-    let admin = await Admin.findOne();
-    if (!admin) {
-      admin = new Admin(data);
-    } else {
-      Object.assign(admin, data);
+    // Validate required fields
+    const requiredFields = ['name', 'title', 'imageUrl', 'details', 'description'];
+    for (const field of requiredFields) {
+      if (!data[field] || data[field].trim() === '') {
+        console.log(`Missing required field: ${field}`);
+        return NextResponse.json(
+          { error: `${field} is required` },
+          { status: 400 }
+        );
+      }
     }
 
-    await admin.save();
-    return NextResponse.json(admin);
+    // Update the in-memory data
+    adminData = { ...adminData, ...data };
+    console.log('Admin data updated in memory:', adminData);
+    
+    // Return the updated admin data
+    return NextResponse.json({
+      success: true,
+      data: adminData,
+      message: 'Admin profile updated successfully'
+    });
   } catch (error) {
     console.error('Error updating admin:', error);
+    
     return NextResponse.json(
-      { error: 'Failed to update admin data' },
+      { error: 'Failed to update admin data', details: error.message },
       { status: 500 }
     );
   }

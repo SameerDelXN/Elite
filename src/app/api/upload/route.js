@@ -3,9 +3,9 @@ import { v2 as cloudinary } from 'cloudinary';
 
 // Configure Cloudinary
 cloudinary.config({
-  cloud_name: 'dislw5d0o',
-  api_key: '262842887729268',
-  api_secret: 'ZhpLHOV0n8lSIhmPdipRKUfuuc0',
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME || 'dislw5d0o',
+  api_key: process.env.CLOUDINARY_API_KEY || '262842887729268',
+  api_secret: process.env.CLOUDINARY_API_SECRET || 'ZhpLHOV0n8lSIhmPdipRKUfuuc0',
 });
 
 export async function POST(request) {

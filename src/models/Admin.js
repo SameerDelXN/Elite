@@ -13,10 +13,10 @@ const adminSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  details: [{
+  details: {
     type: String,
     required: true,
-  }],
+  },
   description: {
     type: String,
     required: true,
@@ -29,6 +29,12 @@ const adminSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+});
+
+// Update the updatedAt field before saving
+adminSchema.pre('save', function(next) {
+  this.updatedAt = new Date();
+  next();
 });
 
 const Admin = mongoose.models.Admin || mongoose.model('Admin', adminSchema);

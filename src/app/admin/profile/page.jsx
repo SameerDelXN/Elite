@@ -14,6 +14,7 @@ export default function AdminProfilePage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState('');
 
@@ -21,18 +22,52 @@ export default function AdminProfilePage() {
     fetchAdminData();
   }, []);
 
+  useEffect(() => {
+    if (success) {
+      const timer = setTimeout(() => {
+        setSuccess('');
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [success]);
+
+  // Update form fields when adminData changes
+  useEffect(() => {
+    console.log('Admin data changed:', adminData);
+  }, [adminData]);
+
   const fetchAdminData = async () => {
     try {
       const res = await fetch('/api/admin');
-      if (!res.ok) throw new Error('Failed to fetch admin data');
       const data = await res.json();
-      setAdminData(data);
+      
+      if (!res.ok) {
+        throw new Error(data.error || data.details || 'Failed to fetch admin data');
+      }
+      
+      console.log('Profile: Fetched admin data:', data);
+      
+      // Set default values if no admin data exists
+      setAdminData({
+        name: data.name || '',
+        title: data.title || '',
+        imageUrl: data.imageUrl || '',
+        details: data.details || '',
+        description: data.description || '',
+      });
       setImagePreview(data.imageUrl || '');
     } catch (err) {
       setError(err.message);
+      console.error('Fetch admin data error:', err);
     } finally {
       setLoading(false);
     }
+  };
+
+  // Add a function to refresh admin data
+  const refreshAdminData = () => {
+    setLoading(true);
+    fetchAdminData();
   };
 
   const handleImageChange = (e) => {
@@ -47,6 +82,17 @@ export default function AdminProfilePage() {
     e.preventDefault();
     setSaving(true);
     setError('');
+    setSuccess('');
+
+    // Validate form fields
+    const requiredFields = ['name', 'title', 'details', 'description'];
+    const emptyFields = requiredFields.filter(field => !adminData[field] || adminData[field].trim() === '');
+    
+    if (emptyFields.length > 0) {
+      setError(`Please fill in all required fields: ${emptyFields.join(', ')}`);
+      setSaving(false);
+      return;
+    }
 
     try {
       let imageUrl = adminData.imageUrl;
@@ -61,7 +107,11 @@ export default function AdminProfilePage() {
           body: formData,
         });
 
-        if (!uploadRes.ok) throw new Error('Failed to upload image');
+        if (!uploadRes.ok) {
+          const uploadError = await uploadRes.json();
+          throw new Error(uploadError.error || 'Failed to upload image');
+        }
+        
         const { url } = await uploadRes.json();
         imageUrl = url;
       }
@@ -78,13 +128,35 @@ export default function AdminProfilePage() {
         }),
       });
 
-      if (!updateRes.ok) throw new Error('Failed to update profile');
+      const updateResult = await updateRes.json();
+      console.log('Update response:', updateResult);
+
+      if (!updateRes.ok) {
+        throw new Error(updateResult.error || updateResult.details || 'Failed to update profile');
+      }
       
-      const updatedData = await updateRes.json();
-      setAdminData(updatedData);
-      alert('Profile updated successfully!');
+      // Update the local state with the returned data
+      console.log('Updating admin data with:', updateResult.data);
+      setAdminData(updateResult.data);
+      
+      // Also update the image preview if a new image was uploaded
+      if (imageUrl !== adminData.imageUrl) {
+        setImagePreview(imageUrl);
+      }
+      
+      setImageFile(null); // Clear the image file after successful upload
+      setSuccess('Profile updated successfully!');
+      
+      // Notify other components that admin data has been updated
+      localStorage.setItem('adminDataUpdated', Date.now().toString());
+      
+      // Force a re-render by updating the form data
+      setTimeout(() => {
+        console.log('Current admin data after update:', adminData);
+      }, 100);
     } catch (err) {
       setError(err.message);
+      console.error('Profile update error:', err);
     } finally {
       setSaving(false);
     }
@@ -105,11 +177,53 @@ export default function AdminProfilePage() {
 
   return (
     <div className="max-w-2xl mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-6">Admin Profile</h1>
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-bold">Admin Profile</h1>
+        <button
+          onClick={refreshAdminData}
+          disabled={loading}
+          className="px-3 py-2 text-sm bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-md flex items-center space-x-2 disabled:opacity-50"
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+          </svg>
+          <span>Refresh</span>
+        </button>
+      </div>
 
       {error && (
-        <div className="p-4 mb-6 bg-red-50 text-red-700 rounded-md">
-          {error}
+        <div className="p-4 mb-6 bg-red-50 text-red-700 rounded-md border border-red-200">
+          <div className="flex">
+            <div className="flex-shrink-0">
+              <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+              </svg>
+            </div>
+            <div className="ml-3">
+              <h3 className="text-sm font-medium text-red-800">Error</h3>
+              <div className="mt-2 text-sm text-red-700">
+                {error}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {success && (
+        <div className="p-4 mb-6 bg-green-50 text-green-700 rounded-md border border-green-200">
+          <div className="flex">
+            <div className="flex-shrink-0">
+              <svg className="h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+              </svg>
+            </div>
+            <div className="ml-3">
+              <h3 className="text-sm font-medium text-green-800">Success</h3>
+              <div className="mt-2 text-sm text-green-700">
+                {success}
+              </div>
+            </div>
+          </div>
         </div>
       )}
 
@@ -161,6 +275,7 @@ export default function AdminProfilePage() {
               type="text"
               id="name"
               name="name"
+              key={`name-${adminData.name}`}
               value={adminData.name}
               onChange={handleChange}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500"
@@ -176,6 +291,7 @@ export default function AdminProfilePage() {
               type="text"
               id="title"
               name="title"
+              key={`title-${adminData.title}`}
               value={adminData.title}
               onChange={handleChange}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500"
@@ -191,6 +307,7 @@ export default function AdminProfilePage() {
               type="text"
               id="details"
               name="details"
+              key={`details-${adminData.details}`}
               value={adminData.details}
               onChange={handleChange}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500"
@@ -205,6 +322,7 @@ export default function AdminProfilePage() {
             <textarea
               id="description"
               name="description"
+              key={`description-${adminData.description}`}
               value={adminData.description}
               onChange={handleChange}
               rows={4}

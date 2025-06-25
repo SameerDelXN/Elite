@@ -237,21 +237,18 @@
 //   );
 // }
 
-
-
 'use client';
 
-import Image from 'next/image';
 import { Linkedin, Star, Users, Award, ArrowRight, CheckCircle, Shield, Clock, TrendingUp, Sparkles, Zap, Trophy } from 'lucide-react';
 
 export default function OfferPage() {
   return (
-    <main className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 font-sans overflow-hidden">
+    <main className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 font-sans overflow-x-hidden">
       {/* Animated Background Elements */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-cyan-400/20 to-blue-600/20 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute top-1/2 -left-40 w-96 h-96 bg-gradient-to-br from-purple-400/20 to-pink-600/20 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
-        <div className="absolute -bottom-40 right-1/4 w-72 h-72 bg-gradient-to-br from-emerald-400/20 to-teal-600/20 rounded-full blur-3xl animate-pulse" style={{animationDelay: '2s'}}></div>
+        <div className="absolute -top-40 -right-40 w-60 h-60 sm:w-80 sm:h-80 bg-gradient-to-br from-cyan-400/20 to-blue-600/20 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute top-1/2 -left-40 w-72 h-72 sm:w-96 sm:h-96 bg-gradient-to-br from-purple-400/20 to-pink-600/20 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
+        <div className="absolute -bottom-40 right-1/4 w-56 h-56 sm:w-72 sm:h-72 bg-gradient-to-br from-emerald-400/20 to-teal-600/20 rounded-full blur-3xl animate-pulse" style={{animationDelay: '2s'}}></div>
         
         {/* Floating Particles */}
         <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-cyan-400 rounded-full animate-bounce" style={{animationDelay: '0s'}}></div>
@@ -259,40 +256,40 @@ export default function OfferPage() {
         <div className="absolute bottom-1/4 left-1/3 w-1.5 h-1.5 bg-pink-400 rounded-full animate-bounce" style={{animationDelay: '2s'}}></div>
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-6 py-16 z-10">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-12 md:py-16 z-10">
         {/* Hero Section - New Financial Year Offer */}
-        <div className="mb-32">
+        <div className="mb-20 md:mb-32">
           <div className="relative bg-gradient-to-r from-slate-800/90 to-slate-700/90 backdrop-blur-xl border border-slate-600/30 rounded-3xl shadow-2xl overflow-hidden group hover:shadow-cyan-500/20 transition-all duration-500">
             {/* Glow Effect */}
             <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-transparent to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
             
             <div className="flex flex-col lg:flex-row relative z-10">
               <div className="lg:w-1/2 relative overflow-hidden">
-                <div className="relative h-96 lg:h-full">
+                <div className="relative h-64 sm:h-80 md:h-96 lg:h-full">
                   <div className="absolute inset-0 bg-gradient-to-br from-cyan-600/80 to-purple-600/80 flex items-center justify-center">
-                    <div className="text-center text-white p-8">
-                      <Sparkles className="w-16 h-16 mx-auto mb-4 animate-spin" style={{animationDuration: '3s'}} />
-                      <div className="text-2xl font-bold mb-2">Financial Excellence</div>
-                      <div className="text-sm opacity-90">Your Future Starts Here</div>
+                    <div className="text-center text-white p-6 sm:p-8">
+                      <Sparkles className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-3 sm:mb-4 animate-spin" style={{animationDuration: '3s'}} />
+                      <div className="text-xl sm:text-2xl font-bold mb-1 sm:mb-2">Financial Excellence</div>
+                      <div className="text-xs sm:text-sm opacity-90">Your Future Starts Here</div>
                     </div>
                   </div>
                   
                   {/* Floating Offer Badge */}
-                  <div className="absolute top-6 right-6 bg-gradient-to-r from-orange-500 to-red-500 text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg animate-pulse">
-                    <Zap className="w-4 h-4 inline mr-1" />
+                  <div className="absolute top-4 right-4 sm:top-6 sm:right-6 bg-gradient-to-r from-orange-500 to-red-500 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-semibold shadow-lg animate-pulse">
+                    <Zap className="w-3 h-3 sm:w-4 sm:h-4 inline mr-1" />
                     Limited Time
                   </div>
                 </div>
               </div>
               
-              <div className="lg:w-1/2 p-8 lg:p-12 flex flex-col justify-center">
-                <div className="space-y-8">
+              <div className="lg:w-1/2 p-6 sm:p-8 lg:p-10 xl:p-12 flex flex-col justify-center">
+                <div className="space-y-6 sm:space-y-8">
                   <div>
-                    <div className="inline-flex items-center bg-gradient-to-r from-orange-500/20 to-red-500/20 text-orange-300 px-4 py-2 rounded-full text-sm font-medium mb-6 border border-orange-500/30">
-                      <Trophy className="w-4 h-4 mr-2" />
+                    <div className="inline-flex items-center bg-gradient-to-r from-orange-500/20 to-red-500/20 text-orange-300 px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium mb-4 sm:mb-6 border border-orange-500/30">
+                      <Trophy className="w-3 h-3 sm:w-4 sm:h-4 mr-2" />
                       New Financial Year Special
                     </div>
-                    <h1 className="text-4xl lg:text-6xl font-black text-white leading-tight mb-6">
+                    <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-black text-white leading-tight mb-4 sm:mb-6">
                       Expert Financial 
                       <span className="block text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 animate-pulse">
                         Consultation
@@ -300,35 +297,35 @@ export default function OfferPage() {
                     </h1>
                   </div>
                   
-                  <div className="relative bg-gradient-to-r from-orange-500/20 to-red-500/20 rounded-2xl p-8 border border-orange-500/30 backdrop-blur-sm">
+                  <div className="relative bg-gradient-to-r from-orange-500/20 to-red-500/20 rounded-2xl p-6 sm:p-8 border border-orange-500/30 backdrop-blur-sm">
                     <div className="absolute inset-0 bg-gradient-to-r from-orange-500/5 to-red-500/5 rounded-2xl animate-pulse"></div>
                     <div className="text-center relative z-10">
-                      <div className="text-4xl lg:text-5xl font-black text-white mb-3 drop-shadow-lg">
+                      <div className="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-2 sm:mb-3 drop-shadow-lg">
                         20% OFF
                       </div>
-                      <div className="text-orange-200 font-semibold text-lg">
+                      <div className="text-orange-200 font-semibold text-base sm:text-lg">
                         1:1 Personalized Consultation
                       </div>
                     </div>
                   </div>
                   
-                  <div className="space-y-4">
+                  <div className="space-y-3 sm:space-y-4">
                     {[
                       'Expert financial guidance',
                       'Tailored loan solutions',
                       'Quick approval process'
                     ].map((item, index) => (
                       <div key={index} className="flex items-center text-slate-200 group">
-                        <CheckCircle className="w-6 h-6 text-emerald-400 mr-4 group-hover:scale-110 transition-transform" />
-                        <span className="font-medium">{item}</span>
+                        <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-400 mr-3 sm:mr-4 group-hover:scale-110 transition-transform" />
+                        <span className="text-sm sm:text-base font-medium">{item}</span>
                       </div>
                     ))}
                   </div>
                   
-                  <button className="group bg-gradient-to-r from-cyan-500 to-purple-600 text-white px-10 py-5 rounded-2xl font-bold text-xl shadow-2xl hover:shadow-cyan-500/50 transform hover:-translate-y-2 hover:scale-105 transition-all duration-300 flex items-center justify-center gap-3 w-full sm:w-auto relative overflow-hidden">
+                  <button className="group bg-gradient-to-r from-cyan-500 to-purple-600 text-white px-8 py-4 sm:px-10 sm:py-5 rounded-2xl font-bold text-lg sm:text-xl shadow-2xl hover:shadow-cyan-500/50 transform hover:-translate-y-1 sm:hover:-translate-y-2 hover:scale-105 transition-all duration-300 flex items-center justify-center gap-3 w-full sm:w-auto relative overflow-hidden">
                     <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     <span className="relative z-10">Book Consultation Now</span>
-                    <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform relative z-10" />
+                    <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-2 transition-transform relative z-10" />
                   </button>
                 </div>
               </div>
@@ -337,38 +334,38 @@ export default function OfferPage() {
         </div>
 
         {/* Testimonial Section */}
-        <div className="mb-32">
+        <div className="mb-20 md:mb-32">
           <div className="max-w-5xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl lg:text-5xl font-black text-white mb-6">
+            <div className="text-center mb-12 sm:mb-16">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-4 sm:mb-6">
                 Trusted by 
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400"> Thousands</span>
               </h2>
-              <div className="w-32 h-2 bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 rounded-full mx-auto animate-pulse"></div>
+              <div className="w-24 sm:w-32 h-1.5 sm:h-2 bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 rounded-full mx-auto animate-pulse"></div>
             </div>
             
-            <div className="relative bg-gradient-to-r from-slate-800/90 to-slate-700/90 backdrop-blur-xl border border-slate-600/30 rounded-3xl shadow-2xl p-8 lg:p-16 group hover:shadow-purple-500/20 transition-all duration-500">
+            <div className="relative bg-gradient-to-r from-slate-800/90 to-slate-700/90 backdrop-blur-xl border border-slate-600/30 rounded-3xl shadow-2xl p-6 sm:p-8 lg:p-12 xl:p-16 group hover:shadow-purple-500/20 transition-all duration-500">
               <div className="absolute inset-0 bg-gradient-to-r from-purple-500/5 via-transparent to-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"></div>
               
               <div className="text-center relative z-10">
-                <div className="flex justify-center mb-8">
+                <div className="flex justify-center mb-6 sm:mb-8">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-8 h-8 text-yellow-400 fill-current hover:scale-125 transition-transform cursor-pointer" style={{animationDelay: `${i * 0.1}s`}} />
+                    <Star key={i} className="w-6 h-6 sm:w-8 sm:h-8 text-yellow-400 fill-current hover:scale-125 transition-transform cursor-pointer" style={{animationDelay: `${i * 0.1}s`}} />
                   ))}
                 </div>
                 
-                <blockquote className="text-2xl lg:text-3xl text-slate-200 leading-relaxed mb-10 italic font-medium">
+                <blockquote className="text-xl sm:text-2xl lg:text-3xl text-slate-200 leading-relaxed mb-8 sm:mb-10 italic font-medium">
                   "BTech Loan_Wala made my loan process effortless! I got urgent funds with minimal hassle and expert guidance. Their team is professional, fast, and reliable. Highly recommend them!"
                 </blockquote>
                 
                 <div className="flex items-center justify-center">
                   <div className="flex items-center">
-                    <div className="w-16 h-16 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-xl mr-6 shadow-lg">
+                    <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-lg sm:text-xl mr-4 sm:mr-6 shadow-lg">
                       N
                     </div>
                     <div className="text-left">
-                      <p className="font-bold text-white text-xl">Navnath Tikode</p>
-                      <p className="text-slate-400 text-sm">Verified Customer</p>
+                      <p className="font-bold text-white text-lg sm:text-xl">Navnath Tikode</p>
+                      <p className="text-slate-400 text-xs sm:text-sm">Verified Customer</p>
                     </div>
                   </div>
                 </div>
@@ -378,29 +375,29 @@ export default function OfferPage() {
         </div>
 
         {/* Connect Section */}
-        <div className="mb-32">
+        <div className="mb-20 md:mb-32">
           <div className="text-center">
-            <div className="mb-12">
-              <h2 className="text-4xl lg:text-5xl font-black text-white mb-6">
+            <div className="mb-8 sm:mb-12">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-4 sm:mb-6">
                 Stay 
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400"> Connected</span>
               </h2>
-              <p className="text-xl text-slate-300 max-w-3xl mx-auto mb-8 leading-relaxed">
+              <p className="text-base sm:text-lg lg:text-xl text-slate-300 max-w-3xl mx-auto mb-6 sm:mb-8 leading-relaxed">
                 Follow our journey on LinkedIn for insights, updates, and financial wisdom
               </p>
-              <div className="w-32 h-2 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full mx-auto animate-pulse"></div>
+              <div className="w-24 sm:w-32 h-1.5 sm:h-2 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full mx-auto animate-pulse"></div>
             </div>
             
             <a
               href="https://www.linkedin.com/company/btechloanwala/?viewAsMember=true"
               target="_blank"
               rel="noopener noreferrer"
-              className="group inline-flex items-center gap-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white px-10 py-5 rounded-2xl font-bold text-xl shadow-2xl hover:shadow-blue-500/50 hover:from-blue-500 hover:to-blue-600 transform hover:-translate-y-2 hover:scale-105 transition-all duration-300 relative overflow-hidden"
+              className="group inline-flex items-center gap-3 sm:gap-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white px-8 py-4 sm:px-10 sm:py-5 rounded-2xl font-bold text-lg sm:text-xl shadow-2xl hover:shadow-blue-500/50 hover:from-blue-500 hover:to-blue-600 transform hover:-translate-y-1 sm:hover:-translate-y-2 hover:scale-105 transition-all duration-300 relative overflow-hidden"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              <Linkedin className="w-7 h-7 relative z-10" />
+              <Linkedin className="w-5 h-5 sm:w-7 sm:h-7 relative z-10" />
               <span className="relative z-10">Follow on LinkedIn</span>
-              <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform relative z-10" />
+              <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-2 transition-transform relative z-10" />
             </a>
           </div>
         </div>
@@ -412,33 +409,33 @@ export default function OfferPage() {
             
             <div className="flex flex-col lg:flex-row-reverse relative z-10">
               <div className="lg:w-1/2 relative overflow-hidden">
-                <div className="relative h-96 lg:h-full">
+                <div className="relative h-64 sm:h-80 md:h-96 lg:h-full">
                   <div className="absolute inset-0 bg-gradient-to-br from-emerald-600/80 to-teal-600/80 flex items-center justify-center">
-                    <div className="text-center text-white p-8">
-                      <Award className="w-16 h-16 mx-auto mb-4 animate-bounce" />
-                      <div className="text-2xl font-bold mb-2">Zero Cost Service</div>
-                      <div className="text-sm opacity-90">Complete Assistance</div>
+                    <div className="text-center text-white p-6 sm:p-8">
+                      <Award className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-3 sm:mb-4 animate-bounce" />
+                      <div className="text-xl sm:text-2xl font-bold mb-1 sm:mb-2">Zero Cost Service</div>
+                      <div className="text-xs sm:text-sm opacity-90">Complete Assistance</div>
                     </div>
                   </div>
                   
                   {/* Floating Stats */}
-                  <div className="absolute bottom-6 left-6 bg-white/10 backdrop-blur-sm rounded-xl p-4 shadow-lg border border-white/20">
+                  <div className="absolute bottom-4 left-4 sm:bottom-6 sm:left-6 bg-white/10 backdrop-blur-sm rounded-xl p-3 sm:p-4 shadow-lg border border-white/20">
                     <div className="flex items-center gap-2">
-                      <Users className="w-5 h-5 text-emerald-400" />
-                      <span className="text-sm font-bold text-white">25+ Partner Banks</span>
+                      <Users className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400" />
+                      <span className="text-xs sm:text-sm font-bold text-white">25+ Partner Banks</span>
                     </div>
                   </div>
                 </div>
               </div>
               
-              <div className="lg:w-1/2 p-8 lg:p-12 flex flex-col justify-center">
-                <div className="space-y-8">
+              <div className="lg:w-1/2 p-6 sm:p-8 lg:p-10 xl:p-12 flex flex-col justify-center">
+                <div className="space-y-6 sm:space-y-8">
                   <div>
-                    <div className="inline-flex items-center bg-gradient-to-r from-emerald-500/20 to-teal-500/20 text-emerald-300 px-4 py-2 rounded-full text-sm font-medium mb-6 border border-emerald-500/30">
-                      <Award className="w-4 h-4 mr-2" />
+                    <div className="inline-flex items-center bg-gradient-to-r from-emerald-500/20 to-teal-500/20 text-emerald-300 px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium mb-4 sm:mb-6 border border-emerald-500/30">
+                      <Award className="w-3 h-3 sm:w-4 sm:h-4 mr-2" />
                       100% Free Service
                     </div>
-                    <h1 className="text-4xl lg:text-6xl font-black text-white leading-tight mb-6">
+                    <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-black text-white leading-tight mb-4 sm:mb-6">
                       Complete Loan
                       <span className="block text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 animate-pulse">
                         Assistance
@@ -446,39 +443,39 @@ export default function OfferPage() {
                     </h1>
                   </div>
                   
-                  <p className="text-xl text-slate-300 leading-relaxed">
+                  <p className="text-base sm:text-lg lg:text-xl text-slate-300 leading-relaxed">
                     From eligibility check to disbursement - we handle everything at zero cost to you.
                   </p>
                   
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
                     {[
                       { icon: Shield, text: 'Secure Process', color: 'emerald' },
                       { icon: Clock, text: 'Quick Approval', color: 'cyan' },
                       { icon: TrendingUp, text: 'Best Rates', color: 'purple' }
                     ].map((item, index) => (
-                      <div key={index} className="bg-slate-700/50 backdrop-blur-sm rounded-xl p-6 text-center border border-slate-600/30 hover:bg-slate-600/50 transition-all duration-300 group">
-                        <item.icon className={`w-10 h-10 text-${item.color}-400 mx-auto mb-3 group-hover:scale-110 transition-transform`} />
-                        <div className="text-sm font-semibold text-white">{item.text}</div>
+                      <div key={index} className="bg-slate-700/50 backdrop-blur-sm rounded-xl p-4 sm:p-6 text-center border border-slate-600/30 hover:bg-slate-600/50 transition-all duration-300 group">
+                        <item.icon className={`w-8 h-8 sm:w-10 sm:h-10 text-${item.color}-400 mx-auto mb-2 sm:mb-3 group-hover:scale-110 transition-transform`} />
+                        <div className="text-xs sm:text-sm font-semibold text-white">{item.text}</div>
                       </div>
                     ))}
                   </div>
                   
-                  <div className="relative bg-gradient-to-r from-emerald-500/20 to-teal-500/20 rounded-2xl p-8 border border-emerald-500/30 backdrop-blur-sm">
+                  <div className="relative bg-gradient-to-r from-emerald-500/20 to-teal-500/20 rounded-2xl p-6 sm:p-8 border border-emerald-500/30 backdrop-blur-sm">
                     <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/5 to-teal-500/5 rounded-2xl animate-pulse"></div>
                     <div className="text-center relative z-10">
-                      <div className="text-3xl font-black text-white mb-3">
+                      <div className="text-2xl sm:text-3xl font-black text-white mb-2 sm:mb-3">
                         ₹0 Service Fee
                       </div>
-                      <div className="text-emerald-200 font-semibold">
+                      <div className="text-emerald-200 font-semibold text-sm sm:text-base">
                         Complete loan processing assistance
                       </div>
                     </div>
                   </div>
                   
-                  <button className="group bg-gradient-to-r from-emerald-500 to-teal-600 text-white px-10 py-5 rounded-2xl font-bold text-xl shadow-2xl hover:shadow-emerald-500/50 transform hover:-translate-y-2 hover:scale-105 transition-all duration-300 flex items-center justify-center gap-3 w-full sm:w-auto relative overflow-hidden">
+                  <button className="group bg-gradient-to-r from-emerald-500 to-teal-600 text-white px-8 py-4 sm:px-10 sm:py-5 rounded-2xl font-bold text-lg sm:text-xl shadow-2xl hover:shadow-emerald-500/50 transform hover:-translate-y-1 sm:hover:-translate-y-2 hover:scale-105 transition-all duration-300 flex items-center justify-center gap-3 w-full sm:w-auto relative overflow-hidden">
                     <div className="absolute inset-0 bg-gradient-to-r from-teal-600 to-cyan-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     <span className="relative z-10">Start Free Process</span>
-                    <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform relative z-10" />
+                    <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-2 transition-transform relative z-10" />
                   </button>
                 </div>
               </div>
