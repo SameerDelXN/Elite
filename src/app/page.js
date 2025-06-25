@@ -8,7 +8,7 @@ export default function Home() {
     <main>
       <HeroSection />
       {/* <HeroSection /> */}
-      {/* Other sections */}
+    
       <ServicesSection/>
       <FeedbackSection/>
       <AboutUs/>
