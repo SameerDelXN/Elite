@@ -1,188 +1,350 @@
 'use client';
 
-import { Linkedin, Star, Users, Award, ArrowRight, CheckCircle, Shield, Clock, TrendingUp, Sparkles, Zap, Trophy, ExternalLink } from 'lucide-react';
+import { Linkedin, Star, Users, Award, ArrowRight, CheckCircle, Shield, Clock, TrendingUp, Sparkles, Zap, Trophy, ExternalLink, ChevronLeft, ChevronRight, Phone, Mail, MapPin } from 'lucide-react';
+import { useState, useEffect } from 'react';
 
 export default function HeroSection() {
+  // Static advertisement images
+  const staticAdImages = [
+    { 
+      id: 1, 
+      src: 'https://via.placeholder.com/600x400/FF6B6B/FFFFFF?text=Personal+Loans+%7C+Quick+Approval',
+      
+    },
+    
+    
+  ];
+
+  // Bank icons data
+  const bankIcons = [
+    { name: 'HDFC', logo: '/bank/HDFC.png' },
+    { name: 'ICICI', logo: '/bank/icici-bank-vector-logo.png' },
+    { name: 'Axis', logo: '/bank/Axis_Bank_Logo.svg.png' },
+    { name: 'Kotak', logo: '/bank/images.png' },
+    { name: 'YES Bank', logo: '/bank/yes.png' },
+    { name: 'PNB', logo: '/bank/pnb.png' },
+   
+   
+    { name: 'IndusInd', logo: '/bank/ind-card-1.jpg' },
+    { name: 'Federal', logo: '/bank/fed.png' },
+    { name: 'Fibe', logo: '/bank/Fibe_Logo.jpg' },
+    { name: 'Finnable', logo: '/bank/finnable.png' },
+    { name: 'Bajaj Finserv', logo: '/bank/Bajaj_Finserv_Logo.svg.png' },
+    { name: 'IDFC First', logo: '/bank/idfc-first-bank8846.jpg' },
+    { name: 'Bandhan', logo: '/bank/bandhan-bank3983.jpg' },
+  ];
+
+  const [adImages, setAdImages] = useState(staticAdImages);
+  const [currentAdIndex, setCurrentAdIndex] = useState(0);
+
+  useEffect(() => {
+    // Fetch the latest hero ads from the API (now supports multiple images)
+    const fetchAd = () => {
+      fetch('/api/hero-ad')
+        .then(res => res.json())
+        .then(data => {
+          if (Array.isArray(data.heroAdImages) && data.heroAdImages.length > 0) {
+            // Map dynamic images to the same format as staticAdImages
+            const dynamicAds = data.heroAdImages.map((img, idx) => ({
+              id: `dynamic-${idx}`,
+              src: img,
+             
+              offer: ''
+            }));
+            setAdImages([
+              ...dynamicAds,
+              ...staticAdImages
+            ]);
+          } else {
+            setAdImages(staticAdImages);
+          }
+        })
+        .catch(() => setAdImages(staticAdImages));
+    };
+    fetchAd();
+    const interval = setInterval(fetchAd, 10000); // Poll every 10 seconds
+    return () => clearInterval(interval);
+  }, []);
+
+  // Auto-scroll advertisement images
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentAdIndex((prevIndex) => (prevIndex + 1) % adImages.length);
+    }, 5000); // 5 seconds per image
+    return () => clearInterval(interval);
+  }, [adImages.length]);
+
+  const nextAd = () => {
+    setCurrentAdIndex((prevIndex) => (prevIndex + 1) % adImages.length);
+  };
+
+  const prevAd = () => {
+    setCurrentAdIndex((prevIndex) => (prevIndex - 1 + adImages.length) % adImages.length);
+  };
+
   return (
-    <section className="relative w-full bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 overflow-hidden">
-      {/* Enhanced Animated Background Elements */}
+    <section className="relative w-full bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 overflow-hidden">
+      {/* Enhanced animated background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {/* Geometric shapes */}
-        <div className="absolute top-20 right-20 w-32 h-32 border border-cyan-400/20 rotate-45 animate-spin" style={{ animationDuration: '20s' }} />
-        <div className="absolute bottom-40 left-16 w-24 h-24 border border-purple-400/20 rotate-12 animate-pulse" />
+        {/* Dynamic gradient orbs - Responsive sizes */}
+        <div className="absolute -top-20 -right-20 w-40 h-40 sm:w-60 sm:h-60 md:w-80 md:h-80 lg:w-96 lg:h-96 bg-gradient-to-br from-blue-300/30 to-purple-400/30 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute top-1/3 -left-20 w-40 h-40 sm:w-60 sm:h-60 md:w-80 md:h-80 lg:w-[30rem] lg:h-[30rem] bg-gradient-to-br from-purple-300/30 to-pink-400/30 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }} />
+        <div className="absolute -bottom-20 right-1/4 w-40 h-40 sm:w-60 sm:h-60 md:w-72 md:h-72 lg:w-96 lg:h-96 bg-gradient-to-br from-emerald-300/30 to-cyan-400/30 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '4s' }} />
         
-        {/* Large gradient orbs */}
-        <div className="absolute -top-32 -right-32 w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 bg-gradient-to-br from-cyan-400/15 to-blue-600/15 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute top-1/2 -left-32 w-72 h-72 md:w-96 md:h-96 lg:w-[28rem] lg:h-[28rem] bg-gradient-to-br from-purple-400/15 to-pink-600/15 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1.5s' }} />
-        <div className="absolute -bottom-32 right-1/4 w-56 h-56 md:w-72 md:h-72 lg:w-80 lg:h-80 bg-gradient-to-br from-emerald-400/15 to-teal-600/15 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '3s' }} />
-        
-        {/* Floating elements */}
-        <div className="hidden md:block absolute top-1/4 left-1/4 w-3 h-3 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full animate-bounce" />
-        <div className="hidden md:block absolute top-1/3 right-1/3 w-2 h-2 bg-gradient-to-r from-purple-400 to-pink-500 rounded-full animate-bounce" style={{ animationDelay: '1s' }} />
-        <div className="hidden md:block absolute bottom-1/3 left-1/3 w-2.5 h-2.5 bg-gradient-to-r from-emerald-400 to-teal-500 rounded-full animate-bounce" style={{ animationDelay: '2s' }} />
+        {/* Floating geometric elements - Responsive positioning */}
+        <div className="hidden sm:block absolute top-1/4 right-1/4 w-16 h-16 sm:w-24 sm:h-24 lg:w-32 lg:h-32 border-2 border-blue-300/40 rotate-45 animate-spin" style={{ animationDuration: '25s' }} />
+        <div className="hidden sm:block absolute bottom-1/3 left-1/5 w-12 h-12 sm:w-16 sm:h-16 lg:w-24 lg:h-24 border-2 border-purple-300/40 rotate-12 animate-bounce" style={{ animationDuration: '3s' }} />
       </div>
 
       {/* Main Content Container */}
-      <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 lg:py-16 z-10">
-        {/* Enhanced Financial Offer Section */}
-        <div className="w-full">
-          <div className="relative bg-gradient-to-br from-slate-800/95 via-slate-700/90 to-slate-800/95 backdrop-blur-xl border border-slate-500/40 rounded-3xl lg:rounded-[2rem] shadow-2xl overflow-hidden group hover:shadow-purple-500/25 transition-all duration-700 hover:scale-[1.02]">
-            {/* Dynamic glow effect */}
-            <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 via-purple-500/10 to-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-            
-            {/* Animated border effect */}
-            <div className="absolute inset-0 rounded-3xl lg:rounded-[2rem] bg-gradient-to-r from-cyan-500/20 via-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-sm" />
-
-            <div className="flex flex-col lg:flex-row relative z-10">
-              {/* Left side - Enhanced Visual */}
-              <div className="w-full lg:w-1/2 relative overflow-hidden rounded-t-3xl lg:rounded-l-3xl lg:rounded-tr-none">
-                <div className="relative h-72 sm:h-80 lg:h-[28rem]">
-                  <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/90 via-purple-600/85 to-pink-600/90 flex items-center justify-center">
-                    {/* Enhanced visual content */}
-                    <div className="text-center text-white p-6 sm:p-8 lg:p-12 relative">
-                      {/* Background decorative elements */}
-                      <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent rounded-2xl" />
+      <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 md:py-8 z-10">
+        
+        {/* Main Layout - Stack on mobile, row on larger screens */}
+        <div className="flex flex-col lg:flex-row gap-4 sm:gap-6 lg:gap-8 mb-6 sm:mb-8">
+          
+          {/* Advertisement Section - Full width on mobile, 2/3 on larger screens */}
+          <div className="flex-1 lg:w-2/3">
+            <div className="bg-white/95 backdrop-blur-xl border border-gray-200/60 rounded-xl sm:rounded-2xl lg:rounded-3xl shadow-lg sm:shadow-xl lg:shadow-2xl overflow-hidden group hover:shadow-blue-500/25 transition-all duration-700">
+              
+              {/* Main Advertisement Carousel - Responsive Height */}
+              <div className="relative h-64 sm:h-80 md:h-96 lg:h-[32rem] xl:h-[40rem] overflow-hidden">
+                <div 
+                  className="flex transition-transform duration-1000 ease-in-out h-full"
+                  style={{ transform: `translateX(-${currentAdIndex * 100}%)` }}
+                >
+                  {adImages.map((image, index) => (
+                    <div key={image.id} className="w-full flex-shrink-0 relative group/slide">
+                      <img 
+                        src={image.src} 
+                        alt={image.alt}
+                        className="w-full h-full object-fit transition-transform duration-700 group-hover/slide:scale-105"
+                      />
                       
-                      <div className="relative z-10">
-                        <div className="mb-6 relative">
-                          <Sparkles className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 mx-auto animate-spin text-yellow-300" style={{ animationDuration: '4s' }} />
-                          <div className="absolute inset-0 flex items-center justify-center">
-                            <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full animate-pulse" />
-                          </div>
-                        </div>
-                        
-                        <div className="space-y-3 lg:space-y-4">
-                          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black leading-tight">
-                            Financial 
-                            <span className="block text-yellow-300">Excellence</span>
-                          </h2>
-                          <p className="text-lg sm:text-xl font-semibold opacity-95">Your Success Journey</p>
-                          <div className="flex justify-center space-x-2 mt-4">
-                            {[...Array(5)].map((_, i) => (
-                              <Star key={i} className="w-5 h-5 text-yellow-300 fill-current animate-pulse" style={{ animationDelay: `${i * 0.2}s` }} />
-                            ))}
-                          </div>
+                      {/* Enhanced overlay with detailed info - Responsive text sizes */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent flex flex-col justify-end p-4 sm:p-6 md:p-8 lg:p-10">
+                        <div className="text-white space-y-2 sm:space-y-4 md:space-y-6">
+                          {/* Offer badge - Responsive sizing */}
+                          {/* <div className="inline-flex items-center bg-gradient-to-r from-orange-500 to-red-500 px-3 py-1 sm:px-4 sm:py-2 md:px-6 md:py-3 rounded-full text-xs sm:text-sm md:text-base font-bold animate-pulse">
+                            <Zap className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 mr-1 sm:mr-2 animate-bounce" />
+                            {image.offer}
+                          </div> */}
+                          
+                          {/* <div>
+                            <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-black mb-1 sm:mb-2 md:mb-4">{image.title}</h3>
+                            <p className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl font-semibold opacity-95 mb-2 sm:mb-4 md:mb-6">{image.subtitle}</p>
+                            
+                            
+                            <div className="flex flex-wrap gap-2 sm:gap-3 md:gap-4 mb-4 sm:mb-6 md:mb-8">
+                              <span className="bg-white/20 backdrop-blur-sm px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-6 lg:py-3 rounded-full text-xs sm:text-sm md:text-base font-semibold">✓ Quick Approval</span>
+                              <span className="bg-white/20 backdrop-blur-sm px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-6 lg:py-3 rounded-full text-xs sm:text-sm md:text-base font-semibold">✓ Best Rates</span>
+                              <span className="bg-white/20 backdrop-blur-sm px-2 py-1 sm:px-3 sm:py-2 md:px-4 md:py-2 lg:px-6 lg:py-3 rounded-full text-xs sm:text-sm md:text-base font-semibold">✓ Expert Guidance</span>
+                            </div>
+                            
+                            
+                            <button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-4 py-2 sm:px-6 sm:py-3 md:px-8 md:py-4 lg:px-10 lg:py-5 rounded-lg sm:rounded-xl md:rounded-2xl font-bold text-sm sm:text-base md:text-lg lg:text-xl flex items-center gap-2 sm:gap-3 md:gap-4 transform hover:scale-105 transition-all duration-300 shadow-lg sm:shadow-xl">
+                              Apply Now
+                              <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" />
+                            </button>
+                          </div> */}
                         </div>
                       </div>
                     </div>
+                  ))}
+                </div>
+
+                {/* Enhanced Navigation - Responsive sizing */}
+                <button 
+                  onClick={prevAd}
+                  className="absolute left-2 sm:left-4 md:left-6 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white text-gray-800 p-2 sm:p-3 md:p-4 rounded-full shadow-lg sm:shadow-xl transition-all duration-300 hover:scale-110 hover:shadow-2xl"
+                >
+                  <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" />
+                </button>
+                
+                <button 
+                  onClick={nextAd}
+                  className="absolute right-2 sm:right-4 md:right-6 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white text-gray-800 p-2 sm:p-3 md:p-4 rounded-full shadow-lg sm:shadow-xl transition-all duration-300 hover:scale-110 hover:shadow-2xl"
+                >
+                  <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6" />
+                </button>
+
+                {/* Enhanced Progress Dots - Responsive sizing */}
+                <div className="absolute bottom-4 sm:bottom-6 md:bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-2 sm:space-x-3 md:space-x-4">
+                  {adImages.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setCurrentAdIndex(index)}
+                      className={`h-2 sm:h-3 md:h-4 rounded-full transition-all duration-500 ${
+                        index === currentAdIndex 
+                          ? 'bg-white w-6 sm:w-8 md:w-10 shadow-md sm:shadow-lg' 
+                          : 'bg-white/50 w-2 sm:w-3 md:w-4 hover:bg-white/75'
+                      }`}
+                    />
+                  ))}
+                </div>
+              </div>
+
+              {/* Advertisement Footer with Quick Stats - Responsive grid */}
+              {/* <div className="bg-gradient-to-r from-gray-50 to-blue-50 p-4 sm:p-6 md:p-8">
+                <div className="grid grid-cols-3 gap-2 sm:gap-4 md:gap-6 text-center">
+                  <div className="group hover:scale-105 transition-transform duration-300">
+                    <div className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-black text-blue-600 mb-1 sm:mb-2">₹100Cr+</div>
+                    <div className="text-xs sm:text-sm md:text-base text-gray-600 font-semibold">Loans Disbursed</div>
                   </div>
-                  
-                  {/* Enhanced badge */}
-                  <div className="absolute top-4 right-4 sm:top-6 sm:right-6 lg:top-8 lg:right-8">
-                    <div className="bg-gradient-to-r from-orange-500 via-red-500 to-pink-500 text-white px-4 py-2 sm:px-5 sm:py-2.5 rounded-full text-sm sm:text-base font-bold shadow-xl animate-pulse border-2 border-white/20">
-                      <Zap className="w-4 h-4 sm:w-5 sm:h-5 inline mr-2 animate-bounce" />
-                      Limited Offer
-                    </div>
+                  <div className="group hover:scale-105 transition-transform duration-300">
+                    <div className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-black text-purple-600 mb-1 sm:mb-2">10K+</div>
+                    <div className="text-xs sm:text-sm md:text-base text-gray-600 font-semibold">Happy Clients</div>
                   </div>
+                  <div className="group hover:scale-105 transition-transform duration-300">
+                    <div className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-black text-pink-600 mb-1 sm:mb-2">4.9★</div>
+                    <div className="text-xs sm:text-sm md:text-base text-gray-600 font-semibold">Client Rating</div>
+                  </div>
+                </div>
+              </div> */}
+            </div>
+          </div>
+
+          {/* Contact and LinkedIn Section - Full width on mobile, 1/3 on larger screens */}
+          <div className="lg:w-1/3 flex flex-col gap-4 sm:gap-6">
+            
+            {/* Contact Information Card - Responsive padding */}
+            <div className="bg-white/95 backdrop-blur-xl border border-gray-200/60 rounded-lg sm:rounded-xl md:rounded-2xl shadow-lg sm:shadow-xl p-4 sm:p-6 md:p-8 hover:shadow-md transition-all duration-500 flex-1">
+              <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 mb-4 sm:mb-6 flex items-center">
+                <Phone className="w-5 h-5 sm:w-6 sm:h-6 mr-2 sm:mr-3 text-blue-600" />
+                Quick Contact
+              </h3>
+              <div className="space-y-4 sm:space-y-6">
+                <div className="flex items-center text-gray-700">
+                  <Phone className="w-4 h-4 sm:w-5 sm:h-5 mr-3 sm:mr-4 text-green-600" />
+                  <span className="font-semibold text-sm sm:text-base md:text-lg">+91 98765 43210</span>
+                </div>
+                <div className="flex items-center text-gray-700">
+                  <Mail className="w-4 h-4 sm:w-5 sm:h-5 mr-3 sm:mr-4 text-blue-600" />
+                  <span className="font-semibold text-sm sm:text-base">info@btechloanwala.com</span>
+                </div>
+                <div className="flex items-center text-gray-700">
+                  <MapPin className="w-4 h-4 sm:w-5 sm:h-5 mr-3 sm:mr-4 text-red-600" />
+                  <span className="font-semibold text-sm sm:text-base">Pune, Maharashtra</span>
                 </div>
               </div>
               
-              {/* Right side - Enhanced Content */}
-              <div className="w-full lg:w-1/2 p-6 sm:p-8 lg:p-12 xl:p-16 flex flex-col justify-center">
-                <div className="space-y-6 lg:space-y-8">
-                  {/* Enhanced header section */}
-                  <div>
-                    <div className="inline-flex items-center bg-gradient-to-r from-orange-500/25 to-red-500/25 text-orange-200 px-4 py-2 sm:px-5 sm:py-2.5 rounded-full text-sm sm:text-base font-semibold mb-6 sm:mb-8 border border-orange-400/40 backdrop-blur-sm">
-                      <Trophy className="w-4 h-4 sm:w-5 sm:h-5 mr-2 text-yellow-400" />
-                      New Financial Year Special
-                    </div>
-                    
-                    <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-white leading-[0.9] mb-6 sm:mb-8">
-                      Expert Financial 
-                      <span className="block text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 animate-pulse mt-2">
-                        Consultation
-                      </span>
-                    </h1>
+              {/* Responsive button */}
+              <button className="w-full bg-gradient-to-r from-green-600 to-blue-600 text-white py-2 sm:py-3 md:py-4 px-4 sm:px-6 rounded-lg sm:rounded-xl font-semibold hover:from-green-700 hover:to-blue-700 transition-all duration-300 transform hover:scale-105 mt-6 sm:mt-8 flex items-center justify-center gap-2 sm:gap-3 text-sm sm:text-base md:text-lg">
+                <Phone className="w-4 h-4 sm:w-5 sm:h-5" />
+                Call Now
+              </button>
+            </div>
+
+            {/* LinkedIn Connection Card - Responsive padding */}
+            <div className="bg-white/95 backdrop-blur-xl border border-gray-200/60 rounded-lg sm:rounded-xl md:rounded-2xl shadow-lg sm:shadow-xl p-4 sm:p-6 md:p-8 hover:shadow-md transition-all duration-500 flex-1">
+              <div className="text-center space-y-4 sm:space-y-6">
+                <div className="bg-gradient-to-r from-blue-600 to-blue-700 p-3 sm:p-4 rounded-full w-fit mx-auto">
+                  <Linkedin className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-white" />
+                </div>
+                
+                <div>
+                  <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 mb-1 sm:mb-2">Follow Us</h3>
+                  <p className="text-gray-600 text-sm sm:text-base">Get financial tips & updates</p>
+                </div>
+                
+                <a 
+                  href="https://www.linkedin.com/company/btechloanwala/?viewAsMember=true"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 sm:gap-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white px-4 sm:px-6 md:px-8 py-2 sm:py-3 md:py-4 rounded-lg sm:rounded-xl font-semibold hover:from-blue-700 hover:to-blue-800 transition-all duration-300 text-sm sm:text-base md:text-lg"
+                >
+                  <span>Connect</span>
+                  <ExternalLink className="w-4 h-4 sm:w-5 sm:h-5" />
+                </a>
+                
+                <div className="flex items-center justify-center gap-4 sm:gap-6 md:gap-8 pt-2 sm:pt-4 text-gray-500 text-sm sm:text-base">
+                  <div className="flex items-center gap-1 sm:gap-2">
+                    <Users className="w-4 h-4 sm:w-5 sm:h-5" />
+                    <span className="font-semibold">1K+</span>
                   </div>
-                  
-                  {/* Enhanced highlight box */}
-                  <div className="relative group/box">
-                    <div className="absolute inset-0 bg-gradient-to-r from-orange-500/30 to-red-500/30 rounded-2xl lg:rounded-3xl blur-sm opacity-75 group-hover/box:opacity-100 transition-opacity" />
-                    <div className="relative bg-gradient-to-br from-orange-500/20 via-red-500/15 to-pink-500/20 rounded-2xl lg:rounded-3xl p-6 lg:p-8 xl:p-10 border border-orange-400/40 backdrop-blur-sm">
-                      <div className="text-center">
-                        <div className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-black text-white mb-3 sm:mb-4 drop-shadow-2xl flex items-center justify-center gap-2">
-                          <span className="text-orange-300">20%</span>
-                          <span className="text-2xl sm:text-3xl lg:text-4xl">OFF</span>
-                        </div>
-                        <div className="text-orange-200 font-bold text-lg sm:text-xl lg:text-2xl">
-                          1:1 Personalized Consultation
-                        </div>
-                        <div className="text-orange-300/80 font-medium text-sm sm:text-base mt-2">
-                          Worth ₹5,000 - Now ₹4,000
-                        </div>
-                      </div>
-                    </div>
+                  <div className="flex items-center gap-1 sm:gap-2">
+                    <Star className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-500 fill-current" />
+                    <span className="font-semibold">4.8</span>
                   </div>
-                  
-                  {/* Enhanced features list */}
-                  <div className="space-y-4 sm:space-y-5">
-                    {[
-                      { text: 'Expert financial guidance', icon: Shield },
-                      { text: 'Tailored loan solutions', icon: TrendingUp },
-                      { text: 'Quick approval process', icon: Clock }
-                    ].map((item, index) => (
-                      <div key={index} className="flex items-center text-slate-200 group/item hover:text-white transition-colors">
-                        <div className="relative mr-4 sm:mr-5">
-                          <CheckCircle className="w-6 h-6 sm:w-7 sm:h-7 text-emerald-400 group-hover/item:scale-110 transition-transform duration-300" />
-                          <item.icon className="w-3 h-3 sm:w-4 sm:h-4 text-emerald-600 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
-                        </div>
-                        <span className="font-semibold text-base sm:text-lg">{item.text}</span>
-                      </div>
-                    ))}
-                  </div>
-                  
-                  {/* Enhanced CTA button */}
-                  <button className="group/cta relative bg-gradient-to-r from-cyan-500 via-purple-600 to-pink-600 text-white px-8 sm:px-10 lg:px-12 py-5 sm:py-6 lg:py-7 rounded-2xl lg:rounded-3xl font-black text-lg sm:text-xl lg:text-2xl shadow-2xl hover:shadow-purple-500/50 transform hover:-translate-y-2 hover:scale-105 transition-all duration-500 flex items-center justify-center gap-3 sm:gap-4 w-full sm:w-auto overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 opacity-0 group-hover/cta:opacity-100 transition-opacity duration-500" />
-                    <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/20 via-purple-400/20 to-pink-400/20 animate-pulse" />
-                    <span className="relative z-10">Book Consultation Now</span>
-                    <ArrowRight className="w-6 h-6 sm:w-7 sm:h-7 group-hover/cta:translate-x-2 transition-transform duration-300 relative z-10" />
-                  </button>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* LinkedIn Connection Card */}
-        <div className="mt-8 lg:mt-12 flex justify-center">
-          <div className="bg-gradient-to-r from-slate-800/90 to-slate-700/90 backdrop-blur-xl border border-slate-600/40 rounded-2xl shadow-xl p-6 sm:p-8 max-w-md w-full hover:shadow-blue-500/20 transition-all duration-500 group/linkedin hover:scale-105">
-            <div className="text-center space-y-4">
-              <div className="flex items-center justify-center">
-                <div className="bg-gradient-to-r from-blue-600 to-blue-700 p-3 rounded-full group-hover/linkedin:scale-110 transition-transform duration-300">
-                  <Linkedin className="w-8 h-8 text-white" />
-                </div>
-              </div>
-              
-              <div>
-                <h3 className="text-xl font-bold text-white mb-2">Connect with us on LinkedIn</h3>
-                <p className="text-slate-300 text-sm">Stay updated with financial tips and industry insights</p>
-              </div>
-              
-              <a 
-                href="https://www.linkedin.com/company/btechloanwala/?viewAsMember=true"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white px-6 py-3 rounded-xl font-semibold hover:from-blue-700 hover:to-blue-800 transition-all duration-300 group-hover/linkedin:shadow-lg group-hover/linkedin:shadow-blue-500/25"
-              >
-                <span>Follow BTech LoanWala</span>
-                <ExternalLink className="w-4 h-4" />
-              </a>
-              
-              <div className="flex items-center justify-center gap-4 pt-2 text-slate-400 text-sm">
-                <div className="flex items-center gap-1">
-                  <Users className="w-4 h-4" />
-                  <span>1K+ Followers</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <Star className="w-4 h-4 text-yellow-400 fill-current" />
-                  <span>4.8 Rating</span>
-                </div>
+        {/* Banking Partners Section - Bottom (Full Width) */}
+        <div className="bg-white/95 backdrop-blur-xl border border-gray-200/60 rounded-xl sm:rounded-2xl md:rounded-3xl shadow-lg sm:shadow-xl overflow-hidden">
+          <div className="bg-gradient-to-r from-blue-50 via-purple-50 to-pink-50 py-6 sm:py-8 overflow-hidden">
+            <div className="text-center mb-4 sm:mb-6 md:mb-8">
+              <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800 mb-2 sm:mb-3">Our Banking Partners</h3>
+              <p className="text-sm sm:text-base md:text-lg text-gray-600">Trusted by leading financial institutions</p>
+            </div>
+            
+            {/* Moving bank icons container - Responsive sizing */}
+            <div className="relative overflow-hidden">
+              <div className="flex animate-scroll">
+                {/* First set of bank icons */}
+                {bankIcons.map((bank, index) => (
+                  <div
+                    key={`first-${index}`}
+                    className="flex-shrink-0 mx-3 sm:mx-4 md:mx-6 p-2 sm:p-3 md:p-4 bg-white/80 backdrop-blur-sm rounded-lg sm:rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105 group"
+                  >
+                    <div className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 flex items-center justify-center">
+                      <img 
+                        src={bank.logo} 
+                        alt={bank.name}
+                        className="w-full h-full object-contain rounded-md group-hover:scale-110 transition-transform duration-300"
+                      />
+                    </div>
+                    <div className="text-xs sm:text-sm md:text-base text-center mt-1 sm:mt-2 md:mt-3 font-semibold text-gray-700">
+                      {bank.name}
+                    </div>
+                  </div>
+                ))}
+                
+                {/* Duplicate set for seamless loop */}
+                {bankIcons.map((bank, index) => (
+                  <div
+                    key={`second-${index}`}
+                    className="flex-shrink-0 mx-3 sm:mx-4 md:mx-6 p-2 sm:p-3 md:p-4 bg-white/80 backdrop-blur-sm rounded-lg sm:rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105 group"
+                  >
+                    <div className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 flex items-center justify-center">
+                      <img 
+                        src={bank.logo} 
+                        alt={bank.name}
+                        className="w-full h-full object-contain rounded-md group-hover:scale-110 transition-transform duration-300"
+                      />
+                    </div>
+                    <div className="text-xs sm:text-sm md:text-base text-center mt-1 sm:mt-2 md:mt-3 font-semibold text-gray-700">
+                      {bank.name}
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
         </div>
       </div>
+
+      {/* Custom CSS for bank icons animation */}
+      <style jsx>{`
+        @keyframes scroll {
+          0% {
+            transform: translateX(0);
+          }
+          100% {
+            transform: translateX(-50%);
+          }
+        }
+        
+        .animate-scroll {
+          animation: scroll 25s linear infinite;
+          will-change: transform;
+        }
+        
+        .animate-scroll:hover {
+          animation-play-state: paused;
+        }
+      `}</style>
     </section>
   );
 }

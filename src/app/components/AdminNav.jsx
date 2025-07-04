@@ -9,6 +9,7 @@ const navigation = [
   { name: 'Services', href: '/admin/services', icon: '🛠️' },
   { name: 'Feedback', href: '/admin/feedback', icon: '💬' },
   { name: 'Settings', href: '/admin/settings', icon: '⚙️' },
+  {name : 'Hero', href: '/admin/herosection', icon: '🏙️'}
 ];
 
 export default function AdminNav() {

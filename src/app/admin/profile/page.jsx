@@ -11,7 +11,6 @@ const ProfilePage = () => {
     name: '',
     title: '',
     imageUrl: '',
-    details: '',
     description: '',
   });
   const [loading, setLoading] = useState(true);
@@ -52,7 +51,7 @@ const ProfilePage = () => {
   const handleUpdate = async (e) => {
     e.preventDefault();
 
-    const requiredFields = ['name', 'title', 'details', 'description'];
+    const requiredFields = ['name', 'title', 'description'];
     const emptyField = requiredFields.find(field => !admin[field]);
     if (emptyField) {
       toast.error(`Please fill in the ${emptyField} field.`);
@@ -78,6 +77,10 @@ const ProfilePage = () => {
       setAdmin(response.data);
       setImagePreview(response.data.imageUrl);
       setImageFile(null);
+      // Notify other tabs/windows to refresh admin data
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('adminDataUpdated', Date.now().toString());
+      }
 
     } catch (error) {
       toast.error('Failed to update profile');
@@ -131,17 +134,6 @@ const ProfilePage = () => {
             onChange={handleChange}
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
           />
-        </div>
-        <div>
-          <label htmlFor="details" className="block text-sm font-medium text-gray-700">Summary (Details)</label>
-          <textarea
-            name="details"
-            id="details"
-            rows="3"
-            value={admin.details}
-            onChange={handleChange}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-          ></textarea>
         </div>
         <div>
           <label htmlFor="description" className="block text-sm font-medium text-gray-700">Description</label>

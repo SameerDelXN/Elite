@@ -1,29 +1,19 @@
 import { NextResponse } from 'next/server';
 import connectDB from '@/lib/db';
 import Admin from '@/models/Admin';
+import fs from 'fs';
+import path from 'path';
 
 export async function GET() {
   try {
     await connectDB();
-    
-    let admin = await Admin.findOne();
+    const admin = await Admin.findOne({});
     if (!admin) {
-      admin = await Admin.create({
-        name: 'Admin Name',
-        title: 'Site Administrator',
-        imageUrl: '/default-profile.png',
-        details: 'Initial details.',
-        description: 'Initial description.',
-      });
+      return NextResponse.json({ error: 'Admin profile not found' }, { status: 404 });
     }
     return NextResponse.json(admin);
-    
-  } catch (err) {
-    console.error('Error in admin route:', err);
-    return NextResponse.json(
-      { error: 'Database error', details: err.message }, 
-      { status: 500 }
-    );
+  } catch (error) {
+    return NextResponse.json({ error: 'Failed to fetch admin profile' }, { status: 500 });
   }
 }
 
@@ -32,7 +22,6 @@ export async function PUT(request) {
   console.log(data)
   try {
     await connectDB();
-    
 
     if (!data || Object.keys(data).length === 0) {
       return NextResponse.json(
@@ -41,9 +30,18 @@ export async function PUT(request) {
       );
     }
 
+    // Only allow specific fields
+    const allowedFields = ['name', 'title', 'imageUrl', 'description'];
+    const updateData = {};
+    for (const field of allowedFields) {
+      if (data[field] !== undefined) {
+        updateData[field] = data[field];
+      }
+    }
+
     const admin = await Admin.findOneAndUpdate(
       {}, 
-      data, 
+      updateData, 
       { 
         new: true, 
         upsert: true, 
