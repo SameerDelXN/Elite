@@ -215,11 +215,11 @@ export default function HeroSection() {
               <div className="space-y-4 sm:space-y-6">
                 <div className="flex items-center text-gray-700">
                   <Phone className="w-4 h-4 sm:w-5 sm:h-5 mr-3 sm:mr-4 text-green-600" />
-                  <span className="font-semibold text-sm sm:text-base md:text-lg">+91 98765 43210</span>
+                  <span className="font-semibold text-sm sm:text-base md:text-lg">+91 8669012275</span>
                 </div>
                 <div className="flex items-center text-gray-700">
                   <Mail className="w-4 h-4 sm:w-5 sm:h-5 mr-3 sm:mr-4 text-blue-600" />
-                  <span className="font-semibold text-sm sm:text-base">info@btechloanwala.com</span>
+                  <span className="font-semibold text-sm sm:text-base">Khondgaurav055@gmail.com</span>
                 </div>
                 <div className="flex items-center text-gray-700">
                   <MapPin className="w-4 h-4 sm:w-5 sm:h-5 mr-3 sm:mr-4 text-red-600" />
@@ -228,10 +228,13 @@ export default function HeroSection() {
               </div>
               
               {/* Responsive button */}
-              <button className="w-full bg-gradient-to-r from-green-600 to-blue-600 text-white py-2 sm:py-3 md:py-4 px-4 sm:px-6 rounded-lg sm:rounded-xl font-semibold hover:from-green-700 hover:to-blue-700 transition-all duration-300 transform hover:scale-105 mt-6 sm:mt-8 flex items-center justify-center gap-2 sm:gap-3 text-sm sm:text-base md:text-lg">
-                <Phone className="w-4 h-4 sm:w-5 sm:h-5" />
-                Call Now
-              </button>
+              <a href="tel:8669012275">
+  <button className="w-full bg-gradient-to-r from-green-600 to-blue-600 text-white py-2 sm:py-3 md:py-4 px-4 sm:px-6 rounded-lg sm:rounded-xl font-semibold hover:from-green-700 hover:to-blue-700 transition-all duration-300 transform hover:scale-105 mt-6 sm:mt-8 flex items-center justify-center gap-2 sm:gap-3 text-sm sm:text-base md:text-lg">
+    <Phone className="w-4 h-4 sm:w-5 sm:h-5" />
+    Call Now
+  </button>
+</a>
+
             </div>
 
             {/* LinkedIn Connection Card - Responsive padding */}
@@ -247,7 +250,7 @@ export default function HeroSection() {
                 </div>
                 
                 <a 
-                  href="https://www.linkedin.com/company/btechloanwala/?viewAsMember=true"
+                  href="https://www.facebook.com/gaurav.khond.2025?mibextid=ZbWKwL"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 sm:gap-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white px-4 sm:px-6 md:px-8 py-2 sm:py-3 md:py-4 rounded-lg sm:rounded-xl font-semibold hover:from-blue-700 hover:to-blue-800 transition-all duration-300 text-sm sm:text-base md:text-lg"

@@ -210,7 +210,7 @@ import React, { useState } from 'react';
 import {
   Instagram,
   Linkedin,
-  Twitter,
+  Facebook,
   Target,
   Users,
   TrendingUp,
@@ -338,23 +338,40 @@ const AboutUs = () => {
 
             {/* Social Links */}
             <div className="flex justify-center lg:justify-start gap-4">
-              {[
-                { icon: <Instagram className="w-6 h-6" />, color: "from-pink-500 to-rose-500", hoverColor: "hover:text-pink-500" },
-                { icon: <Linkedin className="w-6 h-6" />, color: "from-blue-500 to-blue-600", hoverColor: "hover:text-blue-500" },
-                { icon: <Twitter className="w-6 h-6" />, color: "from-sky-400 to-sky-500", hoverColor: "hover:text-sky-500" }
-              ].map((social, index) => (
-                <a
-                  key={index}
-                  href="#"
-                  className="group relative p-4 bg-white rounded-2xl border border-gray-200 hover:bg-gray-50 transition-all duration-300 hover:scale-110 shadow-sm"
-                >
-                  <div className={`absolute inset-0 bg-gradient-to-r ${social.color} rounded-2xl opacity-0 group-hover:opacity-10 transition-opacity duration-300`}></div>
-                  <div className={`text-gray-500 ${social.hoverColor} transition-colors duration-300`}>
-                    {social.icon}
-                  </div>
-                </a>
-              ))}
-            </div>
+  {[
+    {
+      icon: <Instagram className="w-6 h-6" />,
+      color: "from-pink-500 to-rose-500",
+      hoverColor: "hover:text-pink-500",
+      href: "https://www.instagram.com/elite_financial_solutions_pune?igsh=MWhjZnFjbmptNXI4cg=="
+    },
+    {
+      icon: <Linkedin className="w-6 h-6" />,
+      color: "from-blue-500 to-blue-600",
+      hoverColor: "hover:text-blue-500",
+      href: "https://www.facebook.com/gaurav.khond.2025?mibextid=ZbWKwL"
+    },
+    {
+      icon: <Facebook className="w-6 h-6" />,
+      color: "from-blue-600 to-indigo-600",
+      hoverColor: "hover:text-blue-600",
+      href: "https://www.facebook.com/gaurav.khond.2025?mibextid=ZbWKwL"
+    }
+  ].map((social, index) => (
+    <a
+      key={index}
+      href={social.href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group relative p-4 bg-white rounded-2xl border border-gray-200 hover:bg-gray-50 transition-all duration-300 hover:scale-110 shadow-sm"
+    >
+      <div className={`absolute inset-0 bg-gradient-to-r ${social.color} rounded-2xl opacity-0 group-hover:opacity-10 transition-opacity duration-300`}></div>
+      <div className={`text-gray-500 ${social.hoverColor} transition-colors duration-300`}>
+        {social.icon}
+      </div>
+    </a>
+  ))}
+</div>
           </div>
 
           {/* Features */}
