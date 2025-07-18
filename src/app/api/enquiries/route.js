@@ -5,7 +5,7 @@ import fs from 'fs';
 
 // Place your service-account.json in the project root and update the spreadsheet ID below
 const CREDENTIALS_PATH = path.join(process.cwd(), 'service-account.json');
-const SPREADSHEET_ID = '1tLY4j8f-hJFHF92MCASmQ5_eE-V-aWeZ7pJi60pWnQU'; // <-- Replace with your actual Google Sheet ID
+const SPREADSHEET_ID = process.env.SPREADVALUE // <-- Replace with your actual Google Sheet ID
 const SHEET_NAME = 'Sheet1'; // Change if your sheet/tab name is different
 
 const SCOPES = ['https://www.googleapis.com/auth/spreadsheets'];
