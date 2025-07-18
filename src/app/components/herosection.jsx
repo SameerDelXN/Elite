@@ -2,6 +2,7 @@
 
 import { Linkedin, Star, Users, Award, ArrowRight, CheckCircle, Shield, Clock, TrendingUp, Sparkles, Zap, Trophy, ExternalLink, ChevronLeft, ChevronRight, Phone, Mail, MapPin } from 'lucide-react';
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function HeroSection() {
   // Static advertisement images
@@ -81,6 +82,8 @@ export default function HeroSection() {
   const prevAd = () => {
     setCurrentAdIndex((prevIndex) => (prevIndex - 1 + adImages.length) % adImages.length);
   };
+
+  const router = useRouter();
 
   return (
     <section className="relative w-full bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 overflow-hidden">
@@ -205,7 +208,14 @@ export default function HeroSection() {
 
           {/* Contact and LinkedIn Section - Full width on mobile, 1/3 on larger screens */}
           <div className="lg:w-1/3 flex flex-col gap-4 sm:gap-6">
-            
+            {/* Admin Login Button */}
+            <button
+              onClick={() => router.push('/signin')}
+              className="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white py-2 sm:py-3 md:py-4 px-4 sm:px-6 rounded-lg sm:rounded-xl font-semibold hover:from-purple-700 hover:to-blue-700 transition-all duration-300 transform hover:scale-105 mb-2 sm:mb-4 text-sm sm:text-base md:text-lg shadow-md flex items-center justify-center gap-2"
+              style={{ marginBottom: '0.5rem' }}
+            >
+              Admin Login
+            </button>
             {/* Contact Information Card - Responsive padding */}
             <div className="bg-white/95 backdrop-blur-xl border border-gray-200/60 rounded-lg sm:rounded-xl md:rounded-2xl shadow-lg sm:shadow-xl p-4 sm:p-6 md:p-8 hover:shadow-md transition-all duration-500 flex-1">
               <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 mb-4 sm:mb-6 flex items-center">
@@ -219,7 +229,7 @@ export default function HeroSection() {
                 </div>
                 <div className="flex items-center text-gray-700">
                   <Mail className="w-4 h-4 sm:w-5 sm:h-5 mr-3 sm:mr-4 text-blue-600" />
-                  <span className="font-semibold text-sm sm:text-base">Khondgaurav055@gmail.com</span>
+                  <span className="font-semibold text-sm sm:text-base">khondgaurav055@elitepune.com</span>
                 </div>
                 <div className="flex items-center text-gray-700">
                   <MapPin className="w-4 h-4 sm:w-5 sm:h-5 mr-3 sm:mr-4 text-red-600" />
@@ -282,20 +292,22 @@ export default function HeroSection() {
               <p className="text-sm sm:text-base md:text-lg text-gray-600">Trusted by leading financial institutions</p>
             </div>
             
-            {/* Moving bank icons container - Responsive sizing */}
-            <div className="relative overflow-hidden">
-              <div className="flex animate-scroll">
+            {/* Moving bank icons container - Responsive sizing, prevent horizontal scroll */}
+            <div className="relative overflow-x-auto overflow-y-visible w-full max-w-full">
+              <div className="flex animate-scroll min-w-fit md:min-w-0 w-full" style={{maxWidth: '100vw'}}>
                 {/* First set of bank icons */}
                 {bankIcons.map((bank, index) => (
                   <div
                     key={`first-${index}`}
                     className="flex-shrink-0 mx-3 sm:mx-4 md:mx-6 p-2 sm:p-3 md:p-4 bg-white/80 backdrop-blur-sm rounded-lg sm:rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105 group"
+                    style={{maxWidth: '120px'}}
                   >
                     <div className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 flex items-center justify-center">
                       <img 
                         src={bank.logo} 
                         alt={bank.name}
                         className="w-full h-full object-contain rounded-md group-hover:scale-110 transition-transform duration-300"
+                        style={{maxWidth: '100%', height: 'auto'}}
                       />
                     </div>
                     <div className="text-xs sm:text-sm md:text-base text-center mt-1 sm:mt-2 md:mt-3 font-semibold text-gray-700">
@@ -303,25 +315,28 @@ export default function HeroSection() {
                     </div>
                   </div>
                 ))}
-                
-                {/* Duplicate set for seamless loop */}
-                {bankIcons.map((bank, index) => (
-                  <div
-                    key={`second-${index}`}
-                    className="flex-shrink-0 mx-3 sm:mx-4 md:mx-6 p-2 sm:p-3 md:p-4 bg-white/80 backdrop-blur-sm rounded-lg sm:rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105 group"
-                  >
-                    <div className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 flex items-center justify-center">
-                      <img 
-                        src={bank.logo} 
-                        alt={bank.name}
-                        className="w-full h-full object-contain rounded-md group-hover:scale-110 transition-transform duration-300"
-                      />
+                {/* Duplicate set for seamless loop, only on md+ screens */}
+                <div className="hidden md:flex">
+                  {bankIcons.map((bank, index) => (
+                    <div
+                      key={`second-${index}`}
+                      className="flex-shrink-0 mx-3 sm:mx-4 md:mx-6 p-2 sm:p-3 md:p-4 bg-white/80 backdrop-blur-sm rounded-lg sm:rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105 group"
+                      style={{maxWidth: '120px'}}
+                    >
+                      <div className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 flex items-center justify-center">
+                        <img 
+                          src={bank.logo} 
+                          alt={bank.name}
+                          className="w-full h-full object-contain rounded-md group-hover:scale-110 transition-transform duration-300"
+                          style={{maxWidth: '100%', height: 'auto'}}
+                        />
+                      </div>
+                      <div className="text-xs sm:text-sm md:text-base text-center mt-1 sm:mt-2 md:mt-3 font-semibold text-gray-700">
+                        {bank.name}
+                      </div>
                     </div>
-                    <div className="text-xs sm:text-sm md:text-base text-center mt-1 sm:mt-2 md:mt-3 font-semibold text-gray-700">
-                      {bank.name}
-                    </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             </div>
           </div>
@@ -338,14 +353,18 @@ export default function HeroSection() {
             transform: translateX(-50%);
           }
         }
-        
         .animate-scroll {
           animation: scroll 25s linear infinite;
           will-change: transform;
         }
-        
         .animate-scroll:hover {
           animation-play-state: paused;
+        }
+        @media (max-width: 768px) {
+          .animate-scroll {
+            animation: none !important;
+            will-change: auto;
+          }
         }
       `}</style>
     </section>

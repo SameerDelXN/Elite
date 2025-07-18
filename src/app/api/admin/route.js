@@ -68,3 +68,22 @@ export async function PUT(request) {
     );
   }
 }
+
+export async function POST(request) {
+  await connectDB();
+  try {
+    const { name, title, imageUrl, description, email, password } = await request.json();
+    if (!email || !password || !name || !title || !imageUrl || !description) {
+      return NextResponse.json({ error: 'All fields are required.' }, { status: 400 });
+    }
+    // Check if admin already exists
+    let admin = await Admin.findOne({ email });
+    if (admin) {
+      return NextResponse.json({ error: 'Admin already exists.' }, { status: 400 });
+    }
+    admin = await Admin.create({ name, title, imageUrl, description, email, password });
+    return NextResponse.json({ success: true, admin });
+  } catch (error) {
+    return NextResponse.json({ error: 'Failed to create admin', details: error.message }, { status: 500 });
+  }
+}

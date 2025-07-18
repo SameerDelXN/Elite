@@ -47,7 +47,7 @@ export default function ClientLayout({ children }) {
 
       {/* Main content: HeroSection always visible, children below */}
       <main className="flex-1 md:ml-96">
-        {!pathname.startsWith('/admin') && <HeroSection />}
+        {!pathname.startsWith('/admin') && pathname !== '/signin' && <HeroSection />}
         {children}
       </main>
     </div>
