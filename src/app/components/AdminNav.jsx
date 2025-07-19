@@ -37,6 +37,20 @@ export default function AdminNav() {
           );
         })}
       </nav>
+      {/* Logout Button at the bottom */}
+      <div className="mt-auto flex justify-center pt-4">
+        <button
+          onClick={() => {
+            localStorage.clear();
+            sessionStorage.clear();
+            window.location.href = '/';
+          }}
+          className="w-4/5 py-3 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg shadow transition-all duration-200"
+        >
+          Logout
+        </button>
+      </div>
     </div>
+    
   );
 } 
